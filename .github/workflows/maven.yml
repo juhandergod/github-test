@@ -1,12 +1,11 @@
 name: Java CI with Maven
 
 on:
-  push:
-    workflow_dispatch:
-      inputs:
-        name:
-          description: 'Maven artifactory publish'
-          default: 'false'
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Maven artifactory publish'
+        default: 'false'
 
 
 jobs:
@@ -61,7 +60,7 @@ jobs:
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
-      - if: ${{ github.event.maven_publish }} == 'true'
+      - if: ${{ github.event.inputs.name }} == 'true'
         name: Publish to the Maven Central Repository
         run: mvn --batch-mode deploy
         env:
