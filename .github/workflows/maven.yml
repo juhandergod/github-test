@@ -46,7 +46,7 @@ jobs:
         with:
           sarif_file: snyk.sarif
       - name: should not run
-        run: echo 'asd'
+        run: echo "${{ github.event.inputs.name }}"
 
   publish:
     runs-on: ubuntu-latest
