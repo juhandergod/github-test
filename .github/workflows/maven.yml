@@ -25,6 +25,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: should not run
+        run: echo "${{ github.event.inputs.name }}"
+
       - name: Spotless with Maven
         run: mvn spotless:apply
         continue-on-error: false
@@ -45,8 +48,6 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk.sarif
-      - name: should not run
-        run: echo "${{ github.event.inputs.name }}"
 
   publish:
     runs-on: ubuntu-latest
