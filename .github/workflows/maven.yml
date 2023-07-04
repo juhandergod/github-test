@@ -38,6 +38,10 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    parameters:
+      maven_publish:
+        description: 'Maven artifactory publish'
+        default: false
     permissions:
       contents: read
       packages: write
@@ -54,7 +58,7 @@ jobs:
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
-      - if: github.event.inputs.publish_artifacts == 'true'
+      - if: ${{ parameters.maven_publish }} == 'true'
         name: Publish to the Maven Central Repository
         run: mvn --batch-mode deploy
         env:
