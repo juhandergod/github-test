@@ -1,0 +1,62 @@
+name: Java CI with Maven
+
+on: [push]
+
+jobs:
+  build:
+    name: Build Infobip Java API Client
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '11' ]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Spotless with Maven
+      run: mvn spotless:apply
+
+    - name: Build with Maven
+      run: mvn clean install -U
+
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions/maven-3-jdk-11@master
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      with:
+        args: --sarif-file-output=snyk.sarif
+
+    - name: Upload result to GitHub Code Scanning
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: snyk.sarif
+
+    publish:
+      runs-on: ubuntu-latest
+      permissions:
+        contents: read
+        packages: write
+      strategy:
+        matrix:
+          java: [ '11' ]
+      steps:
+        - uses: actions/checkout@v2
+        - name: Set up Java for publishing to Maven Central Repository
+          uses: actions/setup-java@v2
+          with:
+            java-version: ${{ matrix.java }}
+            distribution: 'temurin'
+            server-id: ossrh
+            server-username: MAVEN_USERNAME
+            server-password: MAVEN_PASSWORD
+        - if: github.event.inputs.publish_artifacts == 'true'
+        - name: Publish to the Maven Central Repository
+          run: mvn --batch-mode deploy
+          env:
+            MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+            MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
