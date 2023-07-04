@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '11' ]
+        java: [ '17' ]
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
@@ -43,7 +43,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        java: [ '11' ]
+        java: [ '17' ]
     steps:
       - uses: actions/checkout@v2
       - name: Set up Java for publishing to Maven Central Repository
