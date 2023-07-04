@@ -1,6 +1,13 @@
 name: Java CI with Maven
 
-on: [push]
+on:
+  push:
+    workflow_dispatch:
+      inputs:
+        name:
+          description: 'Maven artifactory publish'
+          default: 'false'
+
 
 jobs:
   build:
@@ -38,11 +45,6 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    parameters:
-      maven_publish:
-        description: 'Maven artifactory publish'
-        default: 'false'
-        required: true
     permissions:
       contents: read
       packages: write
