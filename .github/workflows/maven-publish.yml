@@ -1,0 +1,35 @@
+name: Maven publish
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+    inputs:
+      username:
+        description: 'Maven artifactory username'
+      password:
+        description: 'Maven artifactory password'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        java: [ '17' ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java for publishing to Maven Central Repository
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+      - name: Test
+        run: echo "${{ github.event.inputs.username }} + ${{ github.event.inputs.password }}"
+#      - name: Publish to the Maven Central Repository
+#        run: mvn --batch-mode deploy
+#        env:
+#          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+#          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}

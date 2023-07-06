@@ -1,12 +1,6 @@
 name: Java CI with Maven
 
-on:
-  workflow_dispatch:
-    inputs:
-      name:
-        description: 'Maven artifactory publish'
-        default: false
-
+on: ['push']
 
 jobs:
   build:
@@ -28,10 +22,6 @@ jobs:
       - name: should not run
         run: echo "${{ github.event.inputs.name }}"
 
-      - name: Spotless with Maven
-        run: mvn spotless:apply
-        continue-on-error: false
-
       - name: Build with Maven
         run: mvn clean install -U
         continue-on-error: false
@@ -48,28 +38,3 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: snyk.sarif
-
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    strategy:
-      matrix:
-        java: [ '17' ]
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Java for publishing to Maven Central Repository
-        uses: actions/setup-java@v2
-        with:
-          java-version: ${{ matrix.java }}
-          distribution: 'temurin'
-          server-id: ossrh
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_PASSWORD
-      - if: ${{ github.event.inputs.name }} == 'true'
-        name: Publish to the Maven Central Repository
-        run: mvn --batch-mode deploy
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
