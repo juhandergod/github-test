@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Maven build
 
 on: ['push']
 
@@ -12,23 +12,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK
-        continue-on-error: false
         uses: actions/setup-java@v2
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
           cache: maven
-
-      - name: should not run
-        run: echo "${{ github.event.inputs.name }}"
-
       - name: Build with Maven
         run: mvn clean install -U
         continue-on-error: false
 
+      - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/maven-3-jdk-11@master
-        continue-on-error: false
+        continue-on-error: false # To make sure that SARIF upload gets called
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
