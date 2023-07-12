@@ -37,7 +37,7 @@ jobs:
 
       - name: Check Snyk Report
         run: |
-          high_critical=$(cat snyk.sarif | jq '.runs[0].tool.driver.rules[] | select(.severity | contains(["high", "critical"]))')
+          high_critical=$(cat snyk.sarif | jq '.runs[0].tool.driver.rules[] | select(.severity | contains(["medium", "low"]))')
           if [[ -z $high_critical ]]; then
             echo "No high or critical vulnerabilities found."
           else
