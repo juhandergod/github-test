@@ -38,19 +38,19 @@ jobs:
 
       - name: Check Snyk Report
         run: cat snyk.sarif
-#      - name: Check Snyk Report
-#        run: |
-#          high_critical=$(cat snyk.sarif | jq '.vulnerabilities[] | select(.severity | contains(["high", "critical"]))')
-#          if [[ -z $high_critical ]]; then
-#            echo "No high or critical vulnerabilities found."
-#          else
-#            echo "High or critical vulnerabilities found!"
-#            exit 1
-#          fi
-#      - name: Upload Results to GitHub Code Scanning
-#        uses: github/codeql-action/upload-sarif@v1
-#        with:
-#          sarif_file: snyk.sarif
+      - name: Check Snyk Report
+        run: |
+          high_critical=$(cat snyk-report.json | jq '.runs[0].tool.driver.rules[] | select(.severity | contains(["high", "critical"]))')
+          if [[ -z $high_critical ]]; then
+            echo "No high or critical vulnerabilities found."
+          else
+            echo "High or critical vulnerabilities found!"
+            exit 1
+          fi
+      - name: Upload Results to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: snyk.sarif
 
 
   sonarcloud:
