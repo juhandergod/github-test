@@ -35,6 +35,9 @@ jobs:
         with:
           args: --sarif-file-output=snyk.sarif
 
+      - name: Check snyk
+        run: cat snyk.sarif
+
       - name: Check Snyk Report
         run: |
           high_critical=$(cat snyk.sarif | jq '.runs[0].tool.driver.rules[] | select(.severity == "high" or .severity == "medium")')
