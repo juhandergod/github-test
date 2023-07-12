@@ -22,7 +22,6 @@ jobs:
 
   snyk:
     name: Snyk Code Coverage
-    needs: build
     permissions:
       security-events: write
     runs-on: ubuntu-latest
@@ -37,10 +36,8 @@ jobs:
           args: --sarif-file-output=snyk.sarif
 
       - name: Check Snyk Report
-        run: cat snyk.sarif
-      - name: Check Snyk Report
         run: |
-          high_critical=$(cat snyk-report.json | jq '.runs[0].tool.driver.rules[] | select(.severity | contains(["high", "critical"]))')
+          high_critical=$(cat snyk.sarif | jq '.runs[0].tool.driver.rules[] | select(.severity | contains(["high", "critical"]))')
           if [[ -z $high_critical ]]; then
             echo "No high or critical vulnerabilities found."
           else
