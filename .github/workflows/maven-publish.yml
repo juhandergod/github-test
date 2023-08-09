@@ -16,25 +16,21 @@ jobs:
   mvn-release:
     name: Maven release
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-    strategy:
-      matrix:
-        java: [ '17' ]
+    permissions: write-all
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Set up Java
+      - uses: actions/checkout@v3
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java }}
           distribution: 'temurin'
           cache: maven
-      - name: Automated Github Action Maven Version Bump
-        uses: mickem/gh-action-bump-maven-version@v1.0.0
+      - name: Build with Maven
+        run: mvn versions:set -DnewVersion=${{ github.event.inputs.release-version }} -DgenerateBackupPoms=false
+      - name: Upload changes
+        uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          bump-command: mvn org.codehaus.mojo:versions-maven-plugin:2.7:set-property -Dproperty=revision -DnewVersion=${{ github.event.inputs.release-version }}
+          commit_message: Prepare release ${{ github.event.inputs.release-version }}
   release-on-push:
     name: Create Release
     needs: mvn-release
