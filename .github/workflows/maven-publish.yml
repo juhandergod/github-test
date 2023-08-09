@@ -16,7 +16,7 @@ on:
         required: true
       release-notes:
         description: 'RELEASE_NOTES'
-        type: environment
+        type: string
         required: true
         default: |
           Changes in this Release
