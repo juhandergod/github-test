@@ -18,7 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
           token: ${{ secrets.GH_LOGIN_TOKEN }}
           ref: ${{ github.head_ref }}
@@ -26,9 +27,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Bump version
-        id: bump
-        uses: mickem/gh-action-bump-maven-version
+      - name: Automated Github Action Maven Version Bump
+        uses: mickem/gh-action-bump-maven-version@v1.0.0
         with:
           bump-command: mvn org.codehaus.mojo:versions-maven-plugin:2.7:set-property -Dproperty=revision -DnewVersion=${{ github.event.inputs.release-version }}
   release-on-push:
