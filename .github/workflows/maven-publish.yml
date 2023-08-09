@@ -7,10 +7,20 @@ on:
     inputs:
       username:
         description: 'MAVEN_USERNAME'
+        required: true
       password:
         description: 'MAVEN_PASSWORD'
+        required: true
       release-version:
         description: 'RELEASE_VERSION'
+        required: true
+      release-notes:
+        description: 'RELEASE_NOTES'
+        required: true
+        default: |
+          Changes in this Release
+          - First Change
+          - Second Change
 
 jobs:
   mvn-release:
@@ -54,10 +64,7 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.release-version }}
           release_name: ${{ github.event.inputs.release-version }}
-          body: |
-            Changes in this Release
-            - First Change
-            - Second Change
+          body: ${{ github.event.inputs.release-notes }}
           draft: false
           prerelease: false
   publish:
