@@ -13,6 +13,23 @@ on:
         description: 'RELEASE_VERSION'
 
 jobs:
+  mvn-release:
+    name: Maven release
+    runs-on: ubuntu-latest
+    permissions: write-all
+    strategy:
+      matrix:
+        java: [ '11' ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn versions:set -DnewVersion=${{ github.event.inputs.release-version }}
   release-on-push:
     name: Create Release
     runs-on: ubuntu-latest
@@ -27,7 +44,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ github.event.inputs.release-version }}
-          release_name: Release ${{ github.event.inputs.release-version }}
+          release_name: ${{ github.event.inputs.release-version }}
           body: |
             Changes in this Release
             - First Change
