@@ -32,6 +32,7 @@ jobs:
         run: mvn versions:set -DnewVersion=${{ github.event.inputs.release-version }}
   release-on-push:
     name: Create Release
+    needs: mvn-release
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
