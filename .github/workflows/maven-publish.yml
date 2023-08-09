@@ -3,7 +3,7 @@ name: Maven publish
 on:
   workflow_dispatch:
     branches:
-      - main
+      - master
     inputs:
       username:
         description: 'MAVEN_USERNAME'
