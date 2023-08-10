@@ -14,14 +14,6 @@ on:
       release-version:
         description: 'RELEASE_VERSION'
         required: true
-      release-notes:
-        description: 'RELEASE_NOTES'
-        type: string
-        required: true
-        default: |
-          Changes in this Release
-          - First Change
-          - Second Change
 
 jobs:
   mvn-release:
