@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>github-test</artifactId>
-    <version>4.0.3</version>
+    <version>4.0.4</version>
     <name>github-test</name>
     <description>github-test</description>
     <properties>
