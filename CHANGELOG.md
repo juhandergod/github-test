@@ -5,6 +5,12 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
+## [4.0.1](https://github.com/infobip/infobip-api-java-client/releases/tag/4.0.1) - 2023-08-10
+
+### Added
+* HelloWorld please take care of me.... :) 
+
+
 ## [4.0.0](https://github.com/infobip/infobip-api-java-client/releases/tag/4.0.0) - 2023-03-01
 
 🎉 **NEW Major Version of `infobip-api-java-client`.**
