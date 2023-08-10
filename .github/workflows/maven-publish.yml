@@ -51,13 +51,13 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref }}
-#      - name: Get Changelog Entry
-#        id: changelog_reader
-#        uses: mindsers/changelog-reader-action@v2
-#        with:
-#          validation_level: warn
-#          version: ${{ github.event.inputs.release-version }}
-#          path: ./CHANGELOG.md
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          validation_level: warn
+          version: ${{ github.event.inputs.release-version }}
+          path: ./CHANGELOG.md
       - name: Print out pom.xml
         run: cat pom.xml
       - name: Create/update release
