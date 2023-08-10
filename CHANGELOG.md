@@ -125,7 +125,7 @@ If you find out that something was not addressed properly, please submit an issu
 - Improved Javadoc comments
 
 
-## [3.1.0](https://github.com/infobip/infobip-api-java-client/releases/tag/3.1.0) - 2021-06-16
+## [ [3.1.0](https://github.com/infobip/infobip-api-java-client/releases/tag/3.1.0) ] - 2021-06-16
 
 ### Added
 - Support for [Infobip Email API](https://www.infobip.com/docs/api#channels/email)
