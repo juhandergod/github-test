@@ -22,9 +22,6 @@ on:
           Changes in this Release
           - First Change
           - Second Change
-#      changelog-version:
-#        description: 'CHANGELOG_VERSION'
-#        required: true
 
 jobs:
   mvn-release:
@@ -51,7 +48,7 @@ jobs:
       - name: Upload changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Prepare release ${{ github.event.inputs.release-version }}
+          commit_message: Release version ${{ github.event.inputs.release-version }}
   release-on-push:
     name: Create Release
     needs: mvn-release
@@ -65,7 +62,7 @@ jobs:
         uses: mindsers/changelog-reader-action@v2
         with:
           validation_level: warn
-#          version: ${{ github.event.inputs.changelog-version }}
+          version: ${{ github.event.inputs.release-version }}
           path: ./CHANGELOG.md
       - name: Create Release
         id: create_release
