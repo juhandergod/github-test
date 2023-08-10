@@ -50,8 +50,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-          ref: master
+          ref: ${{ github.ref }}
 #      - name: Get Changelog Entry
 #        id: changelog_reader
 #        uses: mindsers/changelog-reader-action@v2
