@@ -59,7 +59,7 @@ jobs:
           version: ${{ github.event.inputs.release-version }}
           path: ./CHANGELOG.md
       - name: Create release
-        if: ${{ github.event.inputs.create-github-release }} == 'true'
+        if: ${{ github.event.inputs.create-github-release == 'true' }}
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.event.inputs.release-version }}
@@ -94,7 +94,7 @@ jobs:
         run: |
           mvn clean install -U
       - name: Publish to the Maven Central Repository
-        if: ${{ github.event.inputs.publish-maven-central }} == 'true'
+        if: ${{ github.event.inputs.publish-maven-central == 'true' }}
         run: mvn --batch-mode deploy
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USER }}
