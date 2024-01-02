@@ -1,30 +1,30 @@
-name: Maven publish
+name: Maven release and publish
 
 on:
   workflow_dispatch:
     branches:
       - master
     inputs:
-      username:
-        description: 'MAVEN_USERNAME'
-        required: true
-      password:
-        description: 'MAVEN_PASSWORD'
-        required: true
       release-version:
         description: 'RELEASE_VERSION'
         required: true
+      create-github-release:
+        description: 'CREATE_GITHUB_RELEASE'
+        type: boolean
+      publish-maven-central:
+        description: 'PUBLISH_TO_MAVEN_CENTRAL'
+        type: boolean
 
 jobs:
   mvn-release:
-    name: Maven release
+    name: Update POM version
     runs-on: ubuntu-latest
     permissions:
       contents: write
       packages: write
     strategy:
       matrix:
-        java: [ '17' ]
+        java: [ '11' ]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -42,7 +42,7 @@ jobs:
         with:
           commit_message: Release version ${{ github.event.inputs.release-version }}
   release-on-push:
-    name: Create Release
+    name: Create Github release
     needs: mvn-release
     runs-on: ubuntu-latest
     permissions: write-all
@@ -58,30 +58,16 @@ jobs:
           validation_level: warn
           version: ${{ github.event.inputs.release-version }}
           path: ./CHANGELOG.md
-      - name: Print out pom.xml
-        run: cat pom.xml
-      - name: Create/update release
+      - name: Create release
+        if: ${{ github.event.inputs.create-github-release }} == 'true'
         uses: ncipollo/release-action@v1
         with:
-          # This pulls from the "Get Changelog Entry" step above, referencing it's ID to get its outputs object.
-          # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           tag: ${{ github.event.inputs.release-version }}
           name: ${{ github.event.inputs.release-version }}
           body: ${{ steps.changelog_reader.outputs.changes }}
           prerelease: false
           draft: false
           token: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ github.event.inputs.release-version }}
-#          release_name: ${{ github.event.inputs.release-version }}
-#          body: ${{ steps.changelog_reader.outputs.changes }}
-#          draft: false
-#          prerelease: false
   publish:
     runs-on: ubuntu-latest
     needs: release-on-push
@@ -90,9 +76,12 @@ jobs:
       packages: write
     strategy:
       matrix:
-        java: [ '17' ]
+        java: [ '11' ]
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - name: Set up Java for publishing to Maven Central Repository
         uses: actions/setup-java@v2
         with:
@@ -101,8 +90,12 @@ jobs:
           server-id: ossrh
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
+      - name: Maven build
+        run: |
+          mvn clean install -U
       - name: Publish to the Maven Central Repository
+        if: ${{ github.event.inputs.publish-maven-central }} == 'true'
         run: mvn --batch-mode deploy
         env:
-          MAVEN_USERNAME: ${{ github.event.inputs.username }}
-          MAVEN_PASSWORD: ${{ github.event.inputs.password }}
+          MAVEN_USERNAME: ${{ secrets.MAVEN_USER }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASS }}
