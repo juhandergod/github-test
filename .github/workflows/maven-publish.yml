@@ -24,7 +24,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        java: [ '11' ]
+        java: [ '17' ]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -76,7 +76,7 @@ jobs:
       packages: write
     strategy:
       matrix:
-        java: [ '11' ]
+        java: [ '17' ]
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
