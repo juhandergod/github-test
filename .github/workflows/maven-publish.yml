@@ -40,7 +40,7 @@ jobs:
       - name: Upload changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Release version ${{ github.event.inputs.release-version }}
+          commit_message: Update to version ${{ github.event.inputs.release-version }}
   release-on-push:
     name: Create Github release
     needs: mvn-release
@@ -93,6 +93,8 @@ jobs:
       - name: Maven build
         run: |
           mvn clean install -U
+      - name: View settings.xml
+        run: cat /home/runner/.m2/settings.xml
       - name: Publish to the Maven Central Repository
         if: ${{ github.event.inputs.publish-maven-central == 'true' }}
         run: mvn --batch-mode deploy
