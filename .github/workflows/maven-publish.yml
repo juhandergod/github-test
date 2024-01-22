@@ -100,5 +100,6 @@ jobs:
         if: ${{ github.event.inputs.publish-maven-central == 'true' }}
         run: mvn --batch-mode deploy
         env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
           MAVEN_USERNAME: ${{ secrets.MAVEN_USER }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_PASS }}
