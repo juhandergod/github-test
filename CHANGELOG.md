@@ -5,13 +5,13 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
-## [5.0.1](https://github.com/infobip/infobip-api-java-client/releases/tag/5.0.1) - 2024-02-07
+## [5.0.1](https://github.com/juhandergod/github-test/releases/tag/5.0.1) - 2024-02-07
 
 ### Added
 - Updated github workflow dependencies
 
 
-## [5.0.0](https://github.com/infobip/infobip-api-java-client/releases/tag/5.0.0) - 2024-02-07
+## [5.0.0](https://github.com/juhandergod/github-test/releases/tag/5.0.0) - 2024-02-07
 
 🎉 **NEW Major Version of `github-test`.**
 
@@ -36,7 +36,7 @@ straightforward as possible.
 - Ticket title goes here.1
 - Ticket title goes here.2
 
-## [4.0.9](https://github.com/infobip/infobip-api-java-client/releases/tag/4.0.9) - 2023-08-10
+## [4.0.9](https://github.com/juhandergod/github-test/releases/tag/4.0.9) - 2023-08-10
 
 ### Added
 * Test
