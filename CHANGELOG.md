@@ -1,9 +1,34 @@
-# Change Log of `infobip-api-java-client`
+# Change Log of `github-test`
 
 All notable changes to the library will be documented in this file.
 
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
+
+## [5.0.0](https://github.com/infobip/infobip-api-java-client/releases/tag/4.1.0) - 2024-02-07
+
+🎉 **NEW Major Version of `github-test`.**
+
+⚠️ **IMPORTANT NOTE:** This release contains breaking changes.
+All changes, including breaking changes, are addressed and explained in the list bellow.
+If you find out that something was not addressed properly, please submit an issue.
+
+Here we write upgrading notes for brands. It's a team effort to make them as
+straightforward as possible.
+
+### Added
+ - Ticket title goes here.1
+ - Ticket title goes here.2
+ - Ticket title goes here.3
+
+### Changed
+- Ticket title goes here.1
+- Ticket title goes here.2
+- Ticket title goes here.3
+
+### Fixed
+- Ticket title goes here.1
+- Ticket title goes here.2
 
 ## [4.0.9](https://github.com/infobip/infobip-api-java-client/releases/tag/4.0.9) - 2023-08-10
 
