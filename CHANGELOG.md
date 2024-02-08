@@ -1,6 +1,7 @@
 # Change Log of `github-test`
 
 All notable changes to the library will be documented in this file.
+test
 
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
